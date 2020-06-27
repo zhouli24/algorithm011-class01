@@ -1,10 +1,3 @@
-leetcode编程题：
-删除排序数组中的重复项
-移动零
-设计循环双端队列
-
-学习笔记
-用 add first 或 add last 这套新的 API 改写 Deque 的代码：
 import java.util.*;
 public class MyNewDeque {
     public static void main(String[] args) {
