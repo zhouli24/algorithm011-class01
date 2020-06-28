@@ -3,7 +3,7 @@ leetcode编程题：
 移动零
 设计循环双端队列
 
-学习笔记
+学习小结：
 用 add first 或 add last 这套新的 API 改写 Deque 的代码：
 import java.util.*;
 public class MyNewDeque {
@@ -25,3 +25,13 @@ public class MyNewDeque {
         System.out.println(deque);
     }
 }
+
+
+PriorityQueue:
+1、PriorityQueue是一个类，继承AbstractQueue类
+2、用数组实现了一个小顶堆
+3、PriorityQueue，添加或者删除一个元素的时候，都需要对堆进行调整，调bubbleUp方法调整。
+4、add​，offer	添加元素;时间复杂度O(logN)
+poll()	获取并删除队首元素;时间复杂度O(N)
+remove(Object o)	删除指定元素;时间复杂度O(N)
+peek	访问队首元素，但不删除;时间复杂度O(1)
