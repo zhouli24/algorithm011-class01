@@ -1,0 +1,27 @@
+分别统计2个字符串各个字符出现的频次，然后比较频次，不一致则是有效的字母异位词
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        char c;
+        int s_flag[26] = {0};
+        int t_flag[26] = {0};
+        if (s.size()==0 && t.size()==0) return true;
+        if (s.size()==0 || t.size()==0) return false;
+        if (s.size() != t.size()) return false;
+
+        for (int i=0; i<s.size(); i++) {
+            s_flag[s[i]-'a'] = s_flag[s[i]-'a'] + 1;
+        }
+        for (int i=0; i<t.size(); i++) {
+            t_flag[t[i]-'a'] = t_flag[t[i]-'a'] + 1; 
+        }
+
+        for (int i=0; i<26; i++) {
+            if (s_flag[i] != t_flag[i]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+};
