@@ -92,9 +92,12 @@ HashMap:
 
 2、实现：
 1)put-->
-	putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) 出现hash碰撞，需要区分树和链表处理。
+	putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) 用hash(key)做索引，在hash桶，寻找对应位置，没有出现hash碰撞的时候，
+	直接新建添加节点。出现hash碰撞，需要区分树和链表处理，在对应的桶里往后遍历，出现key相等时直接退出遍历；或者返回一个插入的位置，防止新增节点。
 	
 	
 2)get-->
 	final Node<K,V> getNode(int hash, Object key) 用key的hash值，去遍历hash桶，如果是桶节点直接返回；否则遍历每个hash(key)对应的hash链表查找该节点。
 
+3)containsKey->
+	final Node<K,V> getNode(int hash, Object key) 与2)中实现基本一致，存在节点返回非空即为true;反之找不到返回空，则为false。
