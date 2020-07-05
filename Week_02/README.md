@@ -84,5 +84,17 @@ int* maxSlidingWindow(int* nums, int numsSize, int k, int* returnSize){
 
 2种方法，第一种的时间复杂度 O（n^2logn），第2种方法（O(n^2)）.
 
+HashMap:
+1、常用接口：
+1)、增加元素：public V put​(K key, V value)
+2)、获取某个key对应的值；public V get​(Object key)
+3)、判断是否存在某个key：public boolean containsKey​(Object key)
 
+2、实现：
+1)put-->
+	putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict) 出现hash碰撞，需要区分树和链表处理。
+	
+	
+2)get-->
+	final Node<K,V> getNode(int hash, Object key) 用key的hash值，去遍历hash桶，如果是桶节点直接返回；否则遍历每个hash(key)对应的hash链表查找该节点。
 
