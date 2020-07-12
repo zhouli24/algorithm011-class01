@@ -1,0 +1,33 @@
+class Solution {
+    LinkedList<List<Integer>> res = new LinkedList<>();
+
+    public void backtrace(int[] nums, LinkedList<Integer> track) {
+        /* 退出条件 */
+        if (nums.length == track.size() ) {
+            res.add(new LinkedList(track));
+            return;
+        }
+
+        /* 选择 */
+        for (int i=0; i < nums.length; ++i) {
+            if (track.contains(nums[i])) {
+                continue;
+            } 
+
+            track.add(nums[i]);
+            backtrace(nums, track);
+            /* 回退 */
+            track.removeLast();
+        }
+    } 
+
+    public List<List<Integer>> permute(int[] nums) {
+
+        LinkedList<Integer> track = new LinkedList<>();
+
+        backtrace(nums, track);
+
+        return res;
+
+     }
+}

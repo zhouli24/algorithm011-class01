@@ -1,0 +1,36 @@
+class Solution {
+    private LinkedList<List<Integer>> res = new LinkedList<>();
+    public void backtrace(LinkedList<Integer> track, int num, int depth) {
+        /* 退出条件 */
+        if (track.size() == depth) {
+            /* 加入结果 */
+            res.add(new LinkedList(track));
+            return;
+        }
+
+        /* 选路 */
+        for(int i=1; i<=num; ++i) {
+            /* 剔除错误路径 */
+            if (track.contains(i)) {
+                continue;
+            } 
+            /* 剪枝 */
+            if (track.size() != 0 && i < track.peekLast()) {
+                continue;
+            }
+            /* 加入路径 */
+            track.addLast(i);
+            backtrace(track, num, depth);
+            /* 回退 */
+            track.removeLast();
+        }
+    }
+
+    public List<List<Integer>> combine(int n, int k) {
+
+        LinkedList<Integer> track = new LinkedList<>();
+        backtrace(track, n, k);
+        return res;
+
+    }
+}

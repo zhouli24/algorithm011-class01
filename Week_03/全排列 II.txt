@@ -1,0 +1,39 @@
+class Solution {
+    LinkedList<List<Integer>> res = new LinkedList<>();
+
+    public void backtrace(int[] nums, boolean[] used, LinkedList<Integer> track, List<List<Integer>> res) {
+        /* 退出条件 */
+        if (nums.length == track.size()) {
+            res.add(new LinkedList(track));
+            return;
+        }
+
+        /* 选择 */
+        for (int i=0; i < nums.length; ++i) {
+            if (used[i]) {
+                continue;
+            } 
+            if (i > 0 && nums[i] == nums[i - 1] && !used[i - 1]) {
+                continue;
+            }
+
+            track.add(nums[i]);
+            used[i] = true;
+            backtrace(nums, used, track, res);
+            /* 回退 */
+            used[i] = false;
+            track.removeLast();
+        }
+    } 
+
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        LinkedList<Integer> track = new LinkedList<>();
+        int len = nums.length;
+
+        Arrays.sort(nums);
+        boolean[] used = new boolean[len];
+        backtrace(nums, used, track, res);
+
+        return res;
+    }
+}
