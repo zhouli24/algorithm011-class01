@@ -1,0 +1,39 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        int lo, hi,mid;
+        int index = 0;
+        int i=0;
+        if(matrix == null || matrix.length == 0 || 
+            matrix[0] == null || matrix[0].length == 0) {
+            return false;
+        }   
+  
+        for (i=1; i<=matrix.length-1; ++i) {
+            if ((target == matrix[i-1][0]) || (target == matrix[i][0])) {
+                return true;
+            }
+            if ((target < matrix[i][0]) && (target > matrix[i-1][0])) {
+                index = i-1;
+                break;
+            }
+        }
+
+        if (i > matrix.length-1) {
+            index = matrix.length-1;
+        }
+        lo=0;
+        hi = matrix[index].length- 1;
+        while (lo <= hi) {
+                mid = lo + (hi - lo) / 2;
+            if (matrix[index][mid] == target) {
+                return true;
+            } else if (matrix[index][mid] < target) {
+                lo = mid + 1; 
+            } else {
+                hi = mid - 1; 
+            }        
+        }
+
+        return false;
+    }
+}
