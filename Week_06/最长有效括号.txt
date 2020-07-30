@@ -1,0 +1,31 @@
+int longestValidParentheses(char * s){
+    if (s == NULL) return 0;
+    int maxValid = 0;
+    int len = strlen(s);
+    int *dp = malloc(sizeof(int) * (len + 1));
+
+    memset(dp, 0, sizeof(int) * (len + 1));
+    
+    for (int i=1; i<len; i++) {
+        if (s[i] == ')') {
+            if (s[i - 1] == '(') {
+                if ((i >= 2)) {
+                    dp[i] = dp[i - 2] + 2;
+                } else {
+                    dp[i] = 2;
+                }
+            } else {
+                if (((i - dp[i - 1] - 1) >= 0) && (s[i - dp[i - 1] - 1] == '(')) {
+                    if ((i - dp[i - 1] - 2) >= 0) {
+                        dp[i] = dp[i - 1] + 2 + dp[i - dp[i - 1] - 2];
+                    } else {
+                        dp[i] = dp[i - 1] + 2;
+                    }
+                }
+            }
+        }
+
+        maxValid = fmax(maxValid, dp[i]);
+    }
+    return maxValid;
+}
