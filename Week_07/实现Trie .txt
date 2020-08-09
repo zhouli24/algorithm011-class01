@@ -1,0 +1,91 @@
+#define MAX_NUM 26
+typedef struct trie {
+    int isEnd;
+    struct trie *next[MAX_NUM];
+} Trie;
+
+/** Initialize your data structure here. */
+
+Trie* trieCreate() {
+    Trie *root;
+    root = (Trie *)malloc(sizeof(Trie));
+
+    memset(root, 0, sizeof(Trie));
+    return root;
+}
+
+/** Inserts a word into the trie. */
+void trieInsert(Trie* obj, char * word) {
+    Trie *root = obj;
+    if (obj == NULL) return;
+    int len = strlen(word);
+    for (int i=0; i<len; i++) {
+        char c = word[i];
+        if (root->next[c-'a'] == NULL) {
+            root->next[c-'a'] = trieCreate();
+        }
+
+        root = root->next[c-'a'];
+
+    }
+
+     root->isEnd = 1;
+}
+
+/** Returns if the word is in the trie. */
+bool trieSearch(Trie* obj, char * word) {
+    Trie *root = obj;
+    if (obj == NULL) return false;
+    int len = strlen(word);
+    for (int i=0; i<len; i++) {
+        char c = word[i];
+        if (root->next[c-'a'] == NULL) {
+            return false;
+        }
+
+        root = root->next[c-'a'];
+
+    }  
+
+    return root->isEnd > 0;
+}
+
+/** Returns if there is any word in the trie that starts with the given prefix. */
+bool trieStartsWith(Trie* obj, char * prefix) {
+    Trie *root = obj;
+    if (obj == NULL) return false;
+    int len = strlen(prefix);
+    for (int i=0; i<len; i++) {
+        char c = prefix[i];
+        if (root->next[c-'a'] == NULL) {
+            return false;
+        }
+
+        root = root->next[c-'a'];
+
+    }  
+
+    return true;
+}
+
+void trieFree(Trie* obj) {
+    if (obj == NULL) return;
+    for (int i = 0; i < MAX_NUM; i++){
+        if (obj->next[i]){
+            trieFree(obj->next[i]);
+        }
+    }
+    free(obj);
+}
+
+/**
+ * Your Trie struct will be instantiated and called as such:
+ * Trie* obj = trieCreate();
+ * trieInsert(obj, word);
+ 
+ * bool param_2 = trieSearch(obj, word);
+ 
+ * bool param_3 = trieStartsWith(obj, prefix);
+ 
+ * trieFree(obj);
+*/

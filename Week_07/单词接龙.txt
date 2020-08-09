@@ -1,0 +1,105 @@
+普通BFS解法:
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> dir;
+        unordered_set<string> visited;
+        queue<string> qBfs;
+        int num, ans;
+
+        for (auto word : wordList) {
+            dir.insert(word);
+        }
+        if (dir.find(endWord) == dir.end()) return 0;
+        dir.erase(beginWord);
+
+        qBfs.push(beginWord);
+        ans = 1;
+        while (!qBfs.empty()) {
+            num = qBfs.size();
+            for (int j=0; j<num; j++) {
+                string strTemp = qBfs.front();
+                int len = strTemp.length();
+                char oldChar;
+                for (int i=0; i<len; i++) {
+                    oldChar = strTemp[i];
+                    for (char c='a'; c<='z'; c++) {
+                        if (c == oldChar) {
+                            continue;
+                        }
+
+                        strTemp[i] = c;
+                        unordered_set<string>::iterator it = dir.find(strTemp);
+                        if (it != dir.end()) {  
+                            if (endWord.compare(*it) == 0) {
+                                return ans + 1;
+                            }                  
+                            if (visited.find(*it) == visited.end()) {
+                                visited.insert(*it);
+                                qBfs.push(*it);
+                            }
+                        }
+                    }
+                    strTemp[i] = oldChar; /* 恢复 */
+                }
+                qBfs.pop();
+            }
+            ans++;
+        }
+
+        return 0;
+    }
+};
+
+双向BFS解法：
+class Solution {
+public:
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        unordered_set<string> dir;
+        unordered_set<string> visited;
+        queue<string> qBfs;
+        int num, ans;
+
+        for (auto word : wordList) {
+            dir.insert(word);
+        }
+        if (dir.find(endWord) == dir.end()) return 0;
+        dir.erase(beginWord);
+
+        qBfs.push(beginWord);
+        ans = 1;
+        while (!qBfs.empty()) {
+            num = qBfs.size();
+            for (int j=0; j<num; j++) {
+                string strTemp = qBfs.front();
+                int len = strTemp.length();
+                char oldChar;
+                for (int i=0; i<len; i++) {
+                    oldChar = strTemp[i];
+                    for (char c='a'; c<='z'; c++) {
+                        if (c == oldChar) {
+                            continue;
+                        }
+
+                        strTemp[i] = c;
+                        unordered_set<string>::iterator it = dir.find(strTemp);
+                        if (it != dir.end()) {  
+                            if (endWord.compare(*it) == 0) {
+                                return ans + 1;
+                            }                  
+                            if (visited.find(*it) == visited.end()) {
+                                visited.insert(*it);
+                                qBfs.push(*it);
+                            }
+                        }
+                    }
+                    strTemp[i] = oldChar; /* 恢复 */
+                }
+                qBfs.pop();
+            }
+            ans++;
+        }
+
+        return 0;
+    }
+};
