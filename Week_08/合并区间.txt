@@ -1,0 +1,48 @@
+/**
+ * Return an array of arrays of size *returnSize.
+ * The sizes of the arrays are returned as *returnColumnSizes array.
+ * Note: Both returned array and *columnSizes array must be malloced, assume caller calls free().
+ */
+int comp(const void *a, const void *b) {
+    const int *pa = *(int **)a;
+    const int *pb = *(int **)b;
+    if (pa[0] == pb[0]) {
+        return pa[1] - pb[1];
+    } else {
+        return pa[0] - pb[0];
+    }
+}
+int** merge(int** intervals, int intervalsSize, int* intervalsColSize, int* returnSize, int** returnColumnSizes){
+    int **ans = NULL;
+    int cnt = 0;
+    if ((intervals == NULL) || (intervalsSize == 0)) {
+        *returnSize = 0;
+        return NULL;
+    }
+    qsort(intervals, intervalsSize, sizeof(int*), comp);
+    ans = (int **)malloc(sizeof(int *) * intervalsSize);
+    ans[0] = malloc(sizeof(int) * 2);
+    ans[0][0] = intervals[0][0];
+    ans[0][1] = intervals[0][1];
+    for (int i=1; i<intervalsSize; i++) {
+        if ((ans[cnt][1] >= intervals[i][0]) && (ans[cnt][1] <= intervals[i][1])) {
+            ans[cnt][1] = intervals[i][1];
+        } else if (ans[cnt][1] >= intervals[i][1]) {
+        }
+        else {
+            ++cnt;
+            ans[cnt] = malloc(sizeof(int) * 2);
+            ans[cnt][0] = intervals[i][0];
+            ans[cnt][1] = intervals[i][1];          
+        }
+    } 
+
+    *returnSize = cnt + 1;
+
+    *returnColumnSizes = malloc(sizeof(int) * (cnt + 1));
+    for (int i=0; i<*returnSize; i++) {
+        returnColumnSizes[0][i] = 2;
+    }
+
+    return ans;
+}
