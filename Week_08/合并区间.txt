@@ -27,9 +27,7 @@ int** merge(int** intervals, int intervalsSize, int* intervalsColSize, int* retu
     for (int i=1; i<intervalsSize; i++) {
         if ((ans[cnt][1] >= intervals[i][0]) && (ans[cnt][1] <= intervals[i][1])) {
             ans[cnt][1] = intervals[i][1];
-        } else if (ans[cnt][1] >= intervals[i][1]) {
-        }
-        else {
+        } else {
             ++cnt;
             ans[cnt] = malloc(sizeof(int) * 2);
             ans[cnt][0] = intervals[i][0];
