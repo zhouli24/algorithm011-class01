@@ -1,0 +1,31 @@
+char * reverseWords(char * s){
+    char *ret = NULL;
+    char stack[100] = {0};
+    int top=0;
+    int len;
+    int i = 0;
+    
+    len = strlen(s) + 1;
+    
+    ret = malloc(len);
+    memset(ret, 0 , len);
+    while (*s != 0) {
+        if (*s == ' ') {  
+            while (top > 0) {
+                ret[i++] = stack[--top]; 
+            } 
+            ret[i++] = *s;  
+        } else {
+            stack[top++] = *s;
+        }
+        ++s;
+    }
+
+    if (top !=0) {
+        while (top > 0) {
+            ret[i++] = stack[--top]; 
+        }       
+    }
+    return ret;
+    
+}

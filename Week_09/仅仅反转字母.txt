@@ -1,0 +1,30 @@
+char * reverseOnlyLetters(char * S){
+    if (S == NULL) {
+        return S;
+    }
+
+    char *head, *tail;
+    head = S;
+    tail = S + strlen(S) - 1;
+
+    while (head < tail) {
+        if (!isalpha(*head))  {
+            ++head;
+            continue;
+        }
+        
+        if (!isalpha(*tail)) {
+            --tail;
+            continue;
+        }
+
+        char c = *head;
+        *head = *tail;
+        *tail = c;
+
+        ++head;
+        --tail;
+    }
+
+    return S;
+}

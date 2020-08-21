@@ -1,0 +1,39 @@
+char * longestPalindrome(char * s){
+    int substr[2] = {0};
+    if (s==NULL) return NULL;
+    int len = strlen(s);
+    char *ans = NULL;
+    char **dp = NULL;
+
+    dp = malloc(sizeof(char *) * len);
+    
+    for (int i=0; i<len; i++) {
+        dp[i] = malloc(sizeof(char) * len);
+        memset(dp[i], 0, len);
+    }
+
+    for (int i=0; i<len; i++) {
+        dp[i][i] = 1;
+    }
+
+    for (int end=0; end<len; end++) {
+        for (int start=0; start<=end; start++) {
+            if ((s[start] == s[end]) && ((end-start<=1) || (start+1<len) && (end>=1) && ((dp[start+1][end-1])==1))) {
+                if((end-start) > (substr[1]-substr[0])) {
+                    /* 是回文子串，判断长度 */
+                    substr[0] = start;
+                    substr[1] = end;
+                }
+                dp[start][end] = 1;
+            }
+        }
+    }
+
+
+    ans = malloc(substr[1]-substr[0]+2);
+    memset(ans, 0, substr[1]-substr[0]+2);
+    strncat(ans, s+substr[0], substr[1]-substr[0]+1);
+
+    free(dp);
+    return ans;
+}
